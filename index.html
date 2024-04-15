@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Suppository Calculation</title>
+</head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-top: 40px;
+      margin-bottom: 10px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .table-container {
+      margin: 0 20px;
+    }
+
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 600px;  
+      font-size: 24px;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    input[type="number"] {
+      width: 100px;
+      font-size: 24px;
+     
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 28px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .result-table {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .result-table th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .result-table td {
+      padding: 20px;
+    }
+
+    p {
+      font-size: 24px;
+    }
+
+    body {
+      font-size: 24px;    
+    }
+  </style>
+<body>
+  <h1>Suppository Calculation using replacement factor F</h1>
+  
+  <h2>Step 1: Calculate G</h2>
+  <label for="weight-blank">Weight of Blank Suppository (E):</label>
+  <input type="number" id="weight-blank" step="0.01"><br>
+  <label for="percentage-drug">Percentage of Drug in Medicated Suppository (x):</label>
+  <input type="number" id="percentage-drug" step="0.01"><br>
+  <label for="factor-f">Replacement Factor F:</label>
+  <input type="number" id="factor-f" step="0.01"><br>
+  <button onclick="calculateG()">Calculate G</button>
+  <p id="result-g"></p>
+  
+  <h2>Step 2: Calculate Total Weight of Required Base</h2>
+  <label for="num-suppository">Number of Suppositories:</label>
+  <input type="number" id="num-suppository"><br>
+  <button onclick="calculateTotalWeight()">Calculate Total Weight of Required Base</button>
+  <p id="result-total-weight"></p>
+  
+  <button onclick="resetForm()">Reset</button>
+  
+  <script>
+    function calculateG() {
+      var weightBlank = parseFloat(document.getElementById("weight-blank").value);
+      var percentageDrug = parseFloat(document.getElementById("percentage-drug").value);
+      var factorF = parseFloat(document.getElementById("factor-f").value);
+
+      var G = (100 * weightBlank) / (factorF * percentageDrug - percentageDrug + 100);
+      document.getElementById("result-g").textContent = "G: " + G.toFixed(3) + " (Calculated Value)";
+    }
+
+    function calculateTotalWeight() {
+      var numSuppository = parseInt(document.getElementById("num-suppository").value);
+      var G = parseFloat(document.getElementById("result-g").textContent.split(":")[1]);
+      var percentageDrug = parseFloat(document.getElementById("percentage-drug").value);
+
+      var totalWeight = numSuppository * (G - (G * percentageDrug / 100));
+      document.getElementById("result-total-weight").textContent = "Total Weight of Required Base: " + totalWeight.toFixed(3) + " grams";
+    }
+    
+    function resetForm() {
+      document.getElementById("weight-blank").value = "";
+      document.getElementById("percentage-drug").value = "";
+      document.getElementById("factor-f").value = "";
+      document.getElementById("result-g").textContent = "";
+      document.getElementById("num-suppository").value = "";
+      document.getElementById("result-total-weight").textContent = "";
+    }
+  </script>
+</body>
+</html>
